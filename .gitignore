@@ -1,3 +1,4 @@
+### Haskell
 dist
 cabal-dev
 *.o
@@ -10,3 +11,11 @@ cabal-dev
 cabal.sandbox.config
 cabal.config
 *~
+
+### Java
+*.class
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+hs_err_pid*
