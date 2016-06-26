@@ -10,7 +10,7 @@ isAbundant n = (divisorSum n) > n
 
 abundants = filter isAbundant [1..28123]
 
-sumsOfAbundants = nubOrd [ (a+b) | a<-abundants, b<-abundants, (a+b)<=28123 ]
+sumsOfAbundants = nubOrd [ (a+b) | a<-abundants, b<-abundants, a<=b, (a+b)<=28123 ]
 
 target = [1..28123] \\ sumsOfAbundants
 
