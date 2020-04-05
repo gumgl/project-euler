@@ -1,0 +1,36 @@
+Strategy: draw a precedence directed graph, assuming no digit is repeated in the passcode.
+Then perform a topological sort. There is only one solution.
+De-duplicated and sorted keylogs:
+129
+160
+162
+168
+180
+289
+290
+316
+318
+319
+362
+368
+380
+389
+620
+629
+680
+689
+690
+710
+716
+718
+719
+720
+728
+729
+731
+736
+760
+762
+769
+790
+890
