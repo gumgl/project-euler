@@ -1,0 +1,17 @@
+Another one that can be solved with paper and a calculator!
+
+The first obvious solution would be to build the 2D spiral and sum the diagonals.
+
+Then you could save some writes and iterations by only filling in the diagonals,
+skipping to the next diagonal position as you build the spiral.
+
+But in order to do so, you must see the pattern in the skips, and therefore in
+the numbers that go into the diagonals. In fact we don't need a 2D data structure,
+we are only interested in summing the list of numbers going into the (merged) diagonals.
+
+With such pattern in hand, you can write the summation in mathematical form:
+
+(sum (1+(i-1)*2)^2 * 4 + i*20,i=1..n) + 1
+where n = floor(spiral_size/2) (in this case n=500)
+
+You can then obtain the closed form with some algebra: 2/3 n (8 n^2 + 15 n + 13)
