@@ -41,10 +41,7 @@ for x in 0..($size-1)
 end
 
 # Find the minimal path
-visitor = RGL::DijkstraVisitor.new(graph)
-dijkstra = RGL::DijkstraAlgorithm.new(graph, edge_weights_map, visitor)
-
-shortest_path = dijkstra.shortest_path([0,0], [$size-1, $size-1])
+shortest_path = graph.dijkstra_shortest_path(edge_weights_map, [0,0], [$size-1, $size-1])
 
 # Map it back to matrix values
 real_path = shortest_path.map{|v| matrix[v[0]][v[1]]}
