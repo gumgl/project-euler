@@ -3,7 +3,7 @@
 # 2. select the pandigital ones
 # 3. take the largest
 #
-# As it turns out, there are too many primes to filter.
+# As it turns out, there are too many primes to filter (50,847,534).
 # This works quickly for n <= 6 though.
 
 require 'prime'
