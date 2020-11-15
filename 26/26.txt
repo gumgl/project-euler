@@ -1,0 +1,3 @@
+I know this isn't what was intended but it is a bit satisfying to not have to code.
+https://en.wikipedia.org/wiki/Repeating_decimal#Cyclic_numbers
+https://oeis.org/A001913
