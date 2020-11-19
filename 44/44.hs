@@ -13,8 +13,6 @@ candidates = concat $
                  takeWhile (<i) pentagonals))
                pentagonals
 
-candidate = head candidates
-
-answer = fst candidate - snd candidate
+answer = let (j,k)=(head candidates) in j-k
 
 main = print answer
