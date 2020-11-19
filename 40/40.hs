@@ -9,6 +9,6 @@ frac = concat $ map show [0..]
 
 digits = map (\i -> digitToInt $ frac !! (10^i)) [0..6]
 
-answer = foldr (*) 1 digits
+answer = product digits
 
 main = print answer
