@@ -1,4 +1,4 @@
-# Using the quadratic equation, we can derive closed-form
+# Using the quadratic formula, we can derive closed-form
 # tests for these properties.
 
 # Note: Triangular test not needed but included for completeness
