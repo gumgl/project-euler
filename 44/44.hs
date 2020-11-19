@@ -6,8 +6,7 @@ isPentagonal n = (snd (properFraction ((sqrt(24 * fromIntegral n + 1) + 1)/6))) 
 --isCandidate :: Integer -> Integer -> Bool
 isCandidate j k = isPentagonal(j+k) && isPentagonal(abs(j-k))
 
-candidates = concat $ 
-             map (\i -> 
+candidates = concatMap (\i -> 
                map (\j -> (i,j)) $
                filter (isCandidate i) (
                  takeWhile (<i) pentagonals))
