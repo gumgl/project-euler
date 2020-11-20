@@ -23,9 +23,6 @@ combineDups _ [] = []
 combineDups f (x:xs) =
   (foldr1 f dups) : (combineDups f rest)
   where (dups, rest) = (span (== x) (x:xs))
-
-Unnecessary function in the end:
-pairwiseCombos l = [(x,y) | [x,y] <- subsequences l]
 -}
 
 --combineDups :: Eq a => (a -> a -> a) -> [a] -> [a]
