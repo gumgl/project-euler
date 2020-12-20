@@ -1,6 +1,5 @@
 import Data.List
 import Data.Ord
-import Math.NumberTheory.Powers.Squares
 import qualified Data.Map as Map
 
 maxP = 1000
@@ -20,4 +19,4 @@ counts = Map.fromListWith
 
 answer = maximumBy (comparing (counts Map.!)) perimeters
 
-main = print answer
+main = print (answer, counts Map.! answer)
