@@ -7,7 +7,7 @@ maxP = 1000
 
 perimeters = [p
   | a <- [1..maxP], 
-    b <- [1..maxP],
+    b <- [1..a],
     let cFloat = sqrt $ fromInteger (a^2 + b^2),
     let cInt = floor cFloat,
     let p = a + b + cInt,
