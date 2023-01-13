@@ -1,9 +1,9 @@
 import Data.List ( group )
 import Data.Numbers.Primes ( primeFactors )
-import Data.Function ( (&))
+import Data.Function ( (&) )
 
 groupCount :: Eq a => [a] -> [(a, Int)]
-groupCount = map (\(x:xs) -> (x,1+(length xs))) . group
+groupCount = map (\(x:xs) -> (x, 1 + (length xs))) . group
 
 primeFactorsCount :: Integral a => a -> [(a, Int)]
 primeFactorsCount = groupCount . primeFactors

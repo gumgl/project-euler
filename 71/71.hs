@@ -1,4 +1,4 @@
-import Data.List
+import Data.List ( minimumBy )
 import Data.Function ( on )
 import Data.Ratio ( (%), numerator, denominator, Ratio )
 
