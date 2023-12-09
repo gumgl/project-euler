@@ -22,11 +22,8 @@ def next_value(add_to_beginning, sequence):
   
   return seq_stack[0][0 if add_to_beginning else -1]
 
-def part_1():
-  return sum(map(partial(next_value, False), histories))
+def part(i):
+  return sum(map(partial(next_value, i == 2), histories))
 
-def part_2():
-  return sum(map(partial(next_value, True), histories))
-
-print(part_1())
-print(part_2())
+print(part(1))
+print(part(2))
