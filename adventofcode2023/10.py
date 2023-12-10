@@ -1,4 +1,5 @@
 from Coordinates import Point
+from Helpers import indices_2d, keys_by_value
 
 inputfile = open('10_input.txt', 'r')
 
@@ -26,15 +27,6 @@ connections = {
 def is_inbounds(point):
   return 0 <= point.x < width and 0 <= point.y < height
 
-# Using iterators for laziness i.e. stop searching if caller only needs one element
-def indices_2d(haystack, predicate_or_value):
-  return (Point(x,y) for (y,line) in enumerate(haystack) for (x,e) in enumerate(line)
-          if (predicate_or_value(e) if callable(predicate_or_value) else e == predicate_or_value))
-
-def keys_by_value(haystack, predicate_or_value):
-  return (key for key, value in haystack.items() 
-          if (predicate_or_value(value) if callable(predicate_or_value) else value == predicate_or_value))
-
 def connected_neighbours(pos):
   return (neighbour for move in connections[grid[pos.y][pos.x]]
           if (is_inbounds(neighbour:= pos + move)
@@ -42,7 +34,7 @@ def connected_neighbours(pos):
               and move.reverse() in connections[grid[neighbour.y][neighbour.x]]))
 
 def find_cycle():
-  path = [next(indices_2d(grid, 'S'))]
+  path = [Point(*next(indices_2d(grid, 'S', True)))]
   path.append(next(connected_neighbours(path[0]))) # force the first move to the first connection (see `dirs` for order)
 
   while grid[path[-1].y][path[-1].x] != 'S':
