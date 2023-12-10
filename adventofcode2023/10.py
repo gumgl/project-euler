@@ -36,18 +36,16 @@ def connected_neighbours(pos):
   return (neighbour for move in connections[grid[pos.y][pos.x]]
           if is_inbounds(neighbour:= pos + move) and move.reverse() in connections[grid[neighbour.y][neighbour.x]])
 
-def cycle_length():
-  prev_pos = next(indices_2d(grid, 'S'))
-  curr_pos = next(connected_neighbours(prev_pos)) # force the first move to the first connection (see `dir` for order)
-  length = 1
+def find_cycle():
+  path = [next(indices_2d(grid, 'S'))]
+  path.append(next(connected_neighbours(path[0]))) # force the first move to the first connection (see `dir` for order)
 
-  while grid[curr_pos.y][curr_pos.x] != 'S':
-    length += 1
-    (prev_pos, curr_pos) = (curr_pos, next((neighbour for neighbour in connected_neighbours(curr_pos) if neighbour != prev_pos)))
+  while grid[path[-1].y][path[-1].x] != 'S':
+    path.append(next((neighbour for neighbour in connected_neighbours(path[-1]) if neighbour != path[-2])))
 
-  return length
+  return path
 
 def part_1():
-  return int(cycle_length()/2)
+  return int(len(find_cycle())/2)
 
 print(part_1())
