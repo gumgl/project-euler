@@ -71,7 +71,7 @@ def count_outside_area(path):
       if char == 'S':
         char = next(keys_by_value(connections, [neighbour - pos for neighbour in connected_neighbours(pos)]))
 
-      if pos in path:
+      if path_area_cache[pos.y][pos.x]:
         match char:
           case '|':
             inside = not inside
