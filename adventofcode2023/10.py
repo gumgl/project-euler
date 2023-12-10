@@ -8,21 +8,20 @@ inputfile = open('10_input.txt', 'r')
 grid = [[*line.strip()] for line in inputfile.readlines()]
 (width, height) = (len(grid[0]), len(grid))
 
-dir = {
+dirs = {
   'UP': Point(0,-1),
   'RIGHT': Point(1,0),
   'DOWN': Point(0,1),
   'LEFT': Point(-1,0)}
 
 connections = {
-  '|': [dir['UP'], dir['DOWN']],
-  '-': [dir['LEFT'], dir['RIGHT']],
-  'L': [dir['UP'], dir['RIGHT']],
-  'J': [dir['UP'], dir['LEFT']],
-  '7': [dir['LEFT'], dir['DOWN']],
-  'F': [dir['RIGHT'], dir['DOWN']],
-  '.': [],
-  'S': dir.values()}
+  '|': [dirs['UP'], dirs['DOWN']],
+  '-': [dirs['LEFT'], dirs['RIGHT']],
+  'L': [dirs['UP'], dirs['RIGHT']],
+  'J': [dirs['UP'], dirs['LEFT']],
+  '7': [dirs['LEFT'], dirs['DOWN']],
+  'F': [dirs['RIGHT'], dirs['DOWN']],
+  'S': dirs.values()}
 
 def is_inbounds(point):
   return 0 <= point.x < width and 0 <= point.y < height
@@ -38,7 +37,7 @@ def connected_neighbours(pos):
 
 def find_cycle():
   path = [next(indices_2d(grid, 'S'))]
-  path.append(next(connected_neighbours(path[0]))) # force the first move to the first connection (see `dir` for order)
+  path.append(next(connected_neighbours(path[0]))) # force the first move to the first connection (see `dirs` for order)
 
   while grid[path[-1].y][path[-1].x] != 'S':
     path.append(next((neighbour for neighbour in connected_neighbours(path[-1]) if neighbour != path[-2])))
