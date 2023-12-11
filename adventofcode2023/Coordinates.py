@@ -14,12 +14,15 @@ class Point:
         
     def __ne__(self, other):
         return not self.__eq__(other)
-    
-    def reverse(self):
-        return Point(-1 * self.x, -1 * self.y)
         
     def __str__(self):
         return "(%d, %d)" % (self.x, self.y)
     
     def __repr__(self):
         return self.__str__()
+    
+    def reverse(self):
+        return Point(-1 * self.x, -1 * self.y)
+    
+    def euclidean_distance(self, other):
+        return abs(other.x - self.x) + abs(other.y - self.y)
