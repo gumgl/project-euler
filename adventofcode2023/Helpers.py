@@ -42,3 +42,12 @@ def pairs(elems):
 def count_if(haystack, value_or_predicate):
   """ Count the number of elements in iterator which match value or predicate"""
   return sum(value_or_predicate(elem) if callable(value_or_predicate) else elem == value_or_predicate for elem in haystack)
+
+def count_while(haystack, value_or_predicate):
+  """ Count the number of elements at the start of iterator which match value or predicate"""
+  return next(index for index, elem in enumerate(haystack) if not
+          (value_or_predicate(elem) if callable(value_or_predicate) else elem == value_or_predicate))
+
+def count_first_elements(haystack):
+  """Return the first element along with how many times it appears at the start of the list"""
+  return (first_elem := next(haystack), 1 + count_while(haystack, first_elem))
