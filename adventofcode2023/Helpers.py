@@ -38,3 +38,7 @@ def pairs(elems):
   """
   elems = list(elems) # dynamic typing...
   return ((e1, e2) for i, e1 in enumerate(elems) for e2 in elems[i + 1:])
+
+def count_if(haystack, value_or_predicate):
+  """ Count the number of elements in iterator which match value or predicate"""
+  return sum(value_or_predicate(elem) if callable(value_or_predicate) else elem == value_or_predicate for elem in haystack)
