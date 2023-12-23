@@ -51,3 +51,8 @@ def count_while(haystack, value_or_predicate):
 def count_first_elements(haystack):
   """Return the first element along with how many times it appears at the start of the list"""
   return (first_elem := next(haystack), 1 + count_while(haystack, first_elem))
+
+def init_2d(rows, cols, value = 0):
+  """Return a 2D list with specified dimensions and value.
+  list[row][col] = value for row=[0..rows], col=[0..cols]"""
+  return [[value for _ in range(cols)] for _ in range(rows)]
