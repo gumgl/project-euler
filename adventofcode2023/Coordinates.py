@@ -17,8 +17,8 @@ class Point:
         return not self.__eq__(other)
         
     def __str__(self):
-        return ("(%d, %d)" % (self.x, self.y) if self.z == 0
-           else "(%d, %d, %d)" % (self.x, self.y, self.z))
+        return ("Point(%d, %d)" % (self.x, self.y) if self.z == 0
+           else "Point(%d, %d, %d)" % (self.x, self.y, self.z))
     
     def __hash__(self):
         return hash((self.x, self.y, self.z))
