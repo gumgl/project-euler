@@ -29,5 +29,25 @@ class Point:
     def reverse(self):
         return Point(-1 * self.x, -1 * self.y, -1 * self.z)
     
+    def flip_2d(self):
+        """Swap x and y values"""
+        return Point(self.y, self.x, self.z)
+    
     def euclidean_distance(self, other):
         return abs(other.x - self.x) + abs(other.y - self.y) + abs(other.z - self.z)
+
+class Cube:
+    def __init__(self, start, end):
+        self.lower = Point(min(start.x, end.x), min(start.y, end.y), min(start.z, end.z))
+        self.upper = Point(max(start.x, end.x), max(start.y, end.y), max(start.z, end.z))
+
+    def __contains__(self, point):
+        return (self.lower.x <= point.x <= self.upper.x
+            and self.lower.y <= point.y <= self.upper.y
+            and self.lower.z <= point.z <= self.upper.z)
+    
+    def area(self):
+        return (self.upper.x - self.lower.x) * (self.upper.y - self.lower.y)
+    
+    def volume(self):
+        return (self.upper.x - self.lower.x) * (self.upper.y - self.lower.y) * (self.upper.z - self.lower.z)

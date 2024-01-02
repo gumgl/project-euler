@@ -1,3 +1,5 @@
+import copy
+
 def indices_2d(haystack, value_or_predicate, nested_index_first = False):
   """Find indices in a 2-dimensional list, returned as iterable
 
@@ -55,4 +57,4 @@ def count_first_elements(haystack):
 def init_2d(rows, cols, value = 0):
   """Return a 2D list with specified dimensions and value.
   list[row][col] = value for row=[0..rows], col=[0..cols]"""
-  return [[value for _ in range(cols)] for _ in range(rows)]
+  return [[copy.copy(value) for _ in range(cols)] for _ in range(rows)]
