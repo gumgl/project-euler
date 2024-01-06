@@ -22,7 +22,7 @@ def expand_galaxies(grid, galaxies, factor):
                 ) for g in galaxies)
 
 def sum_distances(galaxies):
-  return sum(g1.euclidean_distance(g2) for g1,g2 in pairs(galaxies))
+  return sum(g1.manhattan_distance(g2) for g1,g2 in pairs(galaxies))
 
 def part(num):
   factors = [2, 10**6]

@@ -47,8 +47,11 @@ class Point:
         """Swap x and y values"""
         return Point(self.y, self.x, self.z)
     
-    def euclidean_distance(self, other):
-        return abs(other.x - self.x) + abs(other.y - self.y) + abs(other.z - self.z)
+    def manhattan_distance(self, other):
+        return (other - self).manhattan_length()
+    
+    def manhattan_length(self):
+        return abs(self.x) + abs(self.y) + abs(self.z)
 
 class Cube:
     def __init__(self, start, end):
