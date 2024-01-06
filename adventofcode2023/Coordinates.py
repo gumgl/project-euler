@@ -1,3 +1,5 @@
+from math import sqrt
+
 class Point:
     def __init__(self, x = 0, y = 0, z = 0):
         self.x = x
@@ -52,6 +54,14 @@ class Point:
     
     def manhattan_length(self):
         return abs(self.x) + abs(self.y) + abs(self.z)
+    
+    def euclidean_distance(self, other):
+        """Straight line distance between two points"""
+        return (other - self).euclidean_length()
+
+    def euclidean_length(self):
+        """Straight line distance to origin"""
+        return sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
 
 class Cube:
     def __init__(self, start, end):
@@ -68,3 +78,16 @@ class Cube:
     
     def volume(self):
         return (self.upper.x - self.lower.x) * (self.upper.y - self.lower.y) * (self.upper.z - self.lower.z)
+
+class Polygon2D:
+    def __init__(self, points):
+        """From a list of CW or CCW points that define the polygon (order matters)."""
+        self.points = points
+    
+    def area(self):
+        """Computes area inside polygon using the shoelace formula"""
+        return abs(sum(p1.x * (p2 := self.points[(i+1) % len(self.points)]).y - p2.x * p1.y for i, p1 in enumerate(self.points)) / 2)
+    
+    def perimeter(self):
+        """Returns the sum of all edge lengths"""
+        return sum(p1.euclidean_distance(self.points[(i+1) % len(self.points)]) for i, p1 in enumerate(self.points))
