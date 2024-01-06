@@ -10,11 +10,25 @@ class Point:
     def __sub__(self, other):
         return Point(self.x - other.x, self.y - other.y, self.z - other.z)
     
+    def __mul__(self, scalar):
+        """Scalar multiplication"""
+        return Point(self.x * scalar, self.y * scalar, self.z * scalar)
+    
+    __rmul__ = __mul__
+    
     def __eq__(self, other):
-        return self.x == other.x and self.y == other.y and self.z == other.z
+        return other is not None and self.x == other.x and self.y == other.y and self.z == other.z
         
     def __ne__(self, other):
         return not self.__eq__(other)
+    
+    def __lt__(self, other):
+        return tuple(self) < tuple(other)
+    
+    def __iter__(self):
+        yield self.x
+        yield self.y
+        yield self.z
         
     def __str__(self):
         return ("Point(%d, %d)" % (self.x, self.y) if self.z == 0
@@ -27,7 +41,7 @@ class Point:
         return self.__str__()
     
     def reverse(self):
-        return Point(-1 * self.x, -1 * self.y, -1 * self.z)
+        return self.__mul__(-1)
     
     def flip_2d(self):
         """Swap x and y values"""
