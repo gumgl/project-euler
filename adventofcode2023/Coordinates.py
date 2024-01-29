@@ -62,6 +62,14 @@ class Point:
     def euclidean_length(self):
         """Straight line distance to origin"""
         return sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
+    
+    def __getitem__(self, key):
+        #if key in 'xyz':
+        return getattr(self, key)
+    
+    def __setitem__(self, key, value):
+        #if key in 'xyz':
+        return setattr(self, key, value)
 
 class Cube:
     def __init__(self, start, end):
@@ -74,10 +82,12 @@ class Cube:
             and self.lower.z <= point.z <= self.upper.z)
     
     def area(self):
-        return (self.upper.x - self.lower.x) * (self.upper.y - self.lower.y)
+        """Returns x * y, 0 if any dimension length <= 0"""
+        return max(0, self.upper.x - self.lower.x) * max(0, self.upper.y - self.lower.y)
     
     def volume(self):
-        return (self.upper.x - self.lower.x) * (self.upper.y - self.lower.y) * (self.upper.z - self.lower.z)
+        """Returns x * y *z, 0 if any dimension length <= 0"""
+        return max(0, self.upper.x - self.lower.x) * max(0, self.upper.y - self.lower.y) * max(0, self.upper.z - self.lower.z)
 
 class Polygon2D:
     def __init__(self, points):
