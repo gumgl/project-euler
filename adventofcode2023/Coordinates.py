@@ -88,6 +88,12 @@ class Rectangle:
         """Returns x * y, 0 if any dimension length <= 0"""
         return max(0, self.upper.x - self.lower.x) * max(0, self.upper.y - self.lower.y)
     
+    def overlap(self, other):
+        return Rectangle(Point(max(self.lower.x, other.lower.x), max(self.lower.y, other.lower.y)),
+                    Point(min(self.upper.x, other.upper.x), min(self.upper.y, other.upper.y)))
+    
+    def lattice_points(self):
+        return (Point(x, y) for x in range(self.lower.x, self.upper.x) for y in range(self.lower.y, self.upper.y))
 
 class Polygon2D:
     def __init__(self, points):
