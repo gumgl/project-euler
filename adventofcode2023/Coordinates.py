@@ -6,6 +6,10 @@ class Point:
         self.y = y
         self.z = z
 
+    @staticmethod
+    def from_tuple(t):
+        return Point(*t)
+
     def __add__(self, other):
         return Point(self.x + other.x, self.y + other.y, self.z + other.z)
     
@@ -64,30 +68,26 @@ class Point:
         return sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
     
     def __getitem__(self, key):
-        #if key in 'xyz':
         return getattr(self, key)
     
     def __setitem__(self, key, value):
-        #if key in 'xyz':
         return setattr(self, key, value)
 
-class Cube:
+class Rectangle:
     def __init__(self, start, end):
-        self.lower = Point(min(start.x, end.x), min(start.y, end.y), min(start.z, end.z))
-        self.upper = Point(max(start.x, end.x), max(start.y, end.y), max(start.z, end.z))
+        """For integer (lattice) representation, end represents the boundary and is not included in the rectangle.
+        e.g. a cube of x-length 2 has (start, end) = (1,3)"""
+        self.lower = Point(min(start.x, end.x), min(start.y, end.y))
+        self.upper = Point(max(start.x, end.x), max(start.y, end.y))
 
     def __contains__(self, point):
-        return (self.lower.x <= point.x <= self.upper.x
-            and self.lower.y <= point.y <= self.upper.y
-            and self.lower.z <= point.z <= self.upper.z)
-    
+        return point is not None and (self.lower.x <= point.x < self.upper.x
+                                and self.lower.y <= point.y < self.upper.y)
+
     def area(self):
         """Returns x * y, 0 if any dimension length <= 0"""
         return max(0, self.upper.x - self.lower.x) * max(0, self.upper.y - self.lower.y)
     
-    def volume(self):
-        """Returns x * y *z, 0 if any dimension length <= 0"""
-        return max(0, self.upper.x - self.lower.x) * max(0, self.upper.y - self.lower.y) * max(0, self.upper.z - self.lower.z)
 
 class Polygon2D:
     def __init__(self, points):

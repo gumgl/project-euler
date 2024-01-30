@@ -1,4 +1,4 @@
-from Coordinates import Point, Cube
+from Coordinates import Point, Rectangle
 from Helpers import pairs
 import copy
 import z3
@@ -48,7 +48,7 @@ def xy_intersection(proj1, proj2):
         return Point(x, y1)
 
 def part_1():
-    search_box = Cube(Point(1, 1) * 200000000000000, Point(1, 1) * 400000000000000)
+    search_box = Rectangle(Point(1, 1) * 200000000000000, Point(1, 1) * (400000000000000 + 1)) # inclusive upper bound
 
     return sum(
         (b := reduce_box(p1, p2, search_box)).area() > 0

@@ -1,4 +1,4 @@
-from Coordinates import Point, Cube
+from Coordinates import Point, Rectangle
 from heapq import heappop, heappush
 
 input_grid = [[int(x) for x in line] for line in open('17_input.txt', 'r').read().splitlines()]
@@ -11,7 +11,7 @@ def shortest_path(weights, source, target, min_straight, max_straight):
   The edges are computed dynamically and added to the queue as we search the graph."""
   (width, height) = (len(weights[0]), len(weights))
   max_distance = width * height * 9
-  grid_boundary = Cube(Point(0, 0), Point(width - 1, height - 1))
+  grid_boundary = Rectangle(Point(0, 0), Point(width, height))
 
   queue = [(0, source, Point(0, 0))] # priority queue for Dijkstra's algorithm. note: tuples compare lexicographically.
   seen = set() # to avoid revisiting the same (node, direction) twice

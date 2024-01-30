@@ -1,4 +1,4 @@
-from Coordinates import Point, Cube
+from Coordinates import Point, Rectangle
 from Helpers import init_2d
 
 input_file = open('16_input.txt', 'r')
@@ -27,7 +27,7 @@ def forward_moves(direction, char):
 
 def beam_energy(grid, start_position, start_direction):
   (width, height) = (len(grid[0]), len(grid))
-  grid_boundary = Cube(Point(0, 0), Point(width - 1, height - 1))
+  grid_boundary = Rectangle(Point(0, 0), Point(width, height))
 
   visits = init_2d(height, width, set())
   to_visit = [(start_position, start_direction)]
