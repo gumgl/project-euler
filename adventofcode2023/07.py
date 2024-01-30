@@ -1,5 +1,5 @@
 from enum import Enum
-from Helpers import count_if
+from adventofcode2023.helpers import count_if
 
 input_lines = open('07_input.txt', 'r').read().splitlines()
 HandType = Enum('HandType', ['HIGH_CARD', 'ONE_PAIR', 'TWO_PAIR', 'THREE_OF_A_KIND','FULL_HOUSE', 'FOUR_OF_A_KIND', 'FIVE_OF_A_KIND'])

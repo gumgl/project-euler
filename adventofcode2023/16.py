@@ -1,5 +1,5 @@
-from Coordinates import Point, Rectangle
-from Helpers import init_2d
+from adventofcode2023.coordinates import Point, Rectangle
+from adventofcode2023.helpers import init_2d
 
 input_file = open('16_input.txt', 'r')
 input_grid = [list(*line.split()) for line in input_file.read().splitlines()]

@@ -1,4 +1,4 @@
-from Coordinates import Point
+from adventofcode2023.coordinates import Point
 
 input_file = open('23_input.txt', 'r')
 input_grid = [list(*line.split()) for line in input_file.read().splitlines()]

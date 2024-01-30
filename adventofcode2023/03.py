@@ -1,6 +1,6 @@
 from math import prod
 import re
-from Coordinates import Rectangle, Point
+from adventofcode2023.coordinates import Rectangle, Point
 
 input_lines = open('03_input.txt', 'r').read().splitlines()
 input_grid = [list(*line.split()) for line in input_lines]

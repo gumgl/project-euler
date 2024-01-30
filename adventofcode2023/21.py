@@ -1,5 +1,5 @@
-from Coordinates import Point
-from Helpers import init_2d, consecutive_pairs
+from adventofcode2023.coordinates import Point
+from adventofcode2023.helpers import init_2d, consecutive_pairs
 
 input_grid = [list(*line.split()) for line in open('21_input.txt', 'r').read().splitlines()]
 input_start = next(Point(x, y) for y, line in enumerate(input_grid) for x, c in enumerate(line) if c == 'S')

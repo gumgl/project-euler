@@ -1,5 +1,5 @@
 from functools import lru_cache
-from Helpers import count_if
+from adventofcode2023.helpers import count_if
 
 input_file = open('12_input.txt', 'r')
 

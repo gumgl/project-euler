@@ -1,4 +1,4 @@
-from Coordinates import Point, Polygon2D
+from adventofcode2023.coordinates import Point, Polygon2D
 from itertools import accumulate
 
 input_lines = [line.split() for line in open('18_input.txt', 'r').read().splitlines()]

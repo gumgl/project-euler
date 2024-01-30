@@ -1,6 +1,6 @@
 import copy
 from enum import Enum
-from Coordinates import Point
+from adventofcode2023.coordinates import Point
 
 Direction = Enum('Direction', ['North', 'West', 'South', 'East'])
 

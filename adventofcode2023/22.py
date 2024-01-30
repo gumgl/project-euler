@@ -1,5 +1,5 @@
-from Coordinates import Point
-from Helpers import init_2d
+from adventofcode2023.coordinates import Point
+from adventofcode2023.helpers import init_2d
 
 class Brick:
   def __init__(self, start, end):

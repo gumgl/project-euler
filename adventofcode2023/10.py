@@ -1,5 +1,5 @@
-from Coordinates import Point
-from Helpers import indices_2d, keys_by_value
+from adventofcode2023.coordinates import Point
+from adventofcode2023.helpers import indices_2d, keys_by_value
 
 inputfile = open('10_input.txt', 'r')
 

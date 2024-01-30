@@ -1,4 +1,4 @@
-from Graphs import ALGraph
+from adventofcode2023.graphs import ALGraph
 
 input_lines = open('25_input.txt', 'r').read().splitlines()
 

@@ -1,5 +1,5 @@
 from collections import Counter
-from Helpers import keys_by_value
+from adventofcode2023.helpers import keys_by_value
 
 input_file = open('13_input.txt', 'r')
 

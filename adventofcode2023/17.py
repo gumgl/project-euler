@@ -1,4 +1,4 @@
-from Coordinates import Point, Rectangle
+from adventofcode2023.coordinates import Point, Rectangle
 from heapq import heappop, heappush
 
 input_grid = [[int(x) for x in line] for line in open('17_input.txt', 'r').read().splitlines()]

@@ -1,5 +1,5 @@
-from Coordinates import Point, Rectangle
-from Helpers import pairs
+from adventofcode2023.coordinates import Point, Rectangle
+from adventofcode2023.helpers import pairs
 import copy
 import z3
 
