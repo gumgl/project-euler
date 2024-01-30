@@ -1,6 +1,6 @@
 from Graphs import ALGraph
 
-input_lines = open('25_example.txt', 'r').read().splitlines()
+input_lines = open('25_input.txt', 'r').read().splitlines()
 
 graph = ALGraph()
 
