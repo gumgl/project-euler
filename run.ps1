@@ -16,10 +16,10 @@ function Invoke-Script {
     param($Y, $D)
     
     $DayPad = $D.PadLeft(2, '0')
-    $Dir = Join-Path $Root "aoc" "Y$Y"
+    $Dir = Join-Path $Root "aoc" "Y$Y" "D$DayPad"
     
     # Check Python
-    if (Test-Path (Join-Path $Dir "$DayPad.py")) {
+    if (Test-Path (Join-Path $Dir "solution.py")) {
         Write-Host "--- Day $D ($Y) [Python] ---" -ForegroundColor Green
         # Let run.py handle the output, we just measure time
         $cmdArgs = @("aoc\runner.py", $Y, $D)

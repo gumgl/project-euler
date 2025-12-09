@@ -1,12 +1,14 @@
-input_sections = open('05_input.txt', 'r').read().split('\n\n')
-ranges = sorted([[int(n) for n in line.split('-')] for line in input_sections[0].splitlines()], key=lambda r: r[0])
-ids = [int(line) for line in input_sections[1].splitlines()]
+def solve(input_data):
+    input_sections = input_data.split('\n\n')
+    ranges = sorted([[int(n) for n in line.split('-')] for line in input_sections[0].splitlines()], key=lambda r: r[0])
+    ids = [int(line) for line in input_sections[1].splitlines()]
 
+    return (part_1(ranges, ids), part_2(ranges))
 
-def part_1():
+def part_1(ranges, ids):
     return sum(any(r[0] <= id <= r[1] for r in ranges) for id in ids)
 
-def part_2():
+def part_2(ranges):
     merged = []
     current_start, current_end = ranges[0]
     
@@ -23,6 +25,3 @@ def part_2():
     merged.append((current_start, current_end))
     
     return sum(end - start + 1 for start, end in merged)
-
-print(part_1())
-print(part_2())

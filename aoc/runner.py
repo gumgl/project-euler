@@ -6,11 +6,12 @@ from pathlib import Path
 def run_solution(year, day, use_example):
     day_str = day.zfill(2)
     base_dir = Path(__file__).parent
-    year_dir = base_dir / "aoc" / year
+    year_dir = base_dir / f"Y{year}"
+    day_dir = year_dir / f"D{day_str}"
     
-    script_path = year_dir / f"{day_str}.py"
-    input_filename = f"{day_str}_example.txt" if use_example else f"{day_str}_input.txt"
-    input_path = year_dir / input_filename
+    script_path = day_dir / "solution.py"
+    input_filename = "example.txt" if use_example else "input.txt"
+    input_path = day_dir / input_filename
     
     if not script_path.exists():
         return False, f"Script not found at {script_path}"
@@ -21,7 +22,7 @@ def run_solution(year, day, use_example):
     # Read input
     with open(input_path, "r") as f:
         input_data = f.read()
-        
+    
     # Import the module dynamically
     module_name = f"aoc_{year}_{day_str}"
     spec = importlib.util.spec_from_file_location(module_name, script_path)
@@ -71,7 +72,7 @@ def main():
             day_str = str(d)
             day_padded = day_str.zfill(2)
             base_dir = Path(__file__).parent
-            script_path = base_dir / "aoc" / args.year / f"{day_padded}.py"
+            script_path = base_dir / f"Y{args.year}" / f"D{day_padded}.py"
             
             if script_path.exists():
                 found_any = True

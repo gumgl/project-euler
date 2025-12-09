@@ -1,13 +1,15 @@
 import itertools
 
-red_tiles = [tuple(int(n) for n in line.split(',')) for line in open('09_input.txt', 'r').read().splitlines()]
+def solve(input_data):
+    red_tiles = [tuple(int(n) for n in line.split(',')) for line in input_data.splitlines()]
+    return (part_1(red_tiles), part_2(red_tiles))
 
 rectangle_area = lambda p1, p2: (abs(p2[0] - p1[0]) + 1) * (abs(p2[1] - p1[1]) + 1)
 
-def part_1():
+def part_1(red_tiles):
     return max(rectangle_area(r1, r2) for r1, r2 in itertools.combinations(red_tiles, 2))
 
-def part_2():
+def part_2(red_tiles):
     def intersecting(r1, r2, p1, p2):
         return not (max(r1[0], r2[0]) <= min(p1[0], p2[0]) or 
                     min(r1[0], r2[0]) >= max(p1[0], p2[0]) or
@@ -17,6 +19,3 @@ def part_2():
 
     return max(rectangle_area(r1, r2) for r1, r2 in itertools.combinations(red_tiles, 2)
                if all(not intersecting(r1, r2, p1, p2) for p1, p2 in paths))
-
-print(part_1())
-print(part_2())

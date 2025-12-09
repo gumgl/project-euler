@@ -1,7 +1,8 @@
-input_lines = open('01_input.txt', 'r').read().splitlines()
-moves = [int(line[1:]) * (-1 if line[0] == 'L' else 1) for line in input_lines]
+def solve(input_data):
+    moves = [int(line[1:]) * (-1 if line[0] == 'L' else 1) for line in input_data.splitlines()]
+    return (part_1(moves), part_2(moves))
 
-def part_1():
+def part_1(moves):
     #return sum([50] + moves) % 100
     dial = 50
     count = 0
@@ -11,7 +12,7 @@ def part_1():
         dial = (dial + move) % 100
     return count
 
-def part_2():
+def part_2(moves):
     dial = 50
     count = 0
     for move in moves:
@@ -20,6 +21,3 @@ def part_2():
             count += 1
         dial = (dial + move) % 100
     return count
-
-print(part_1())
-print(part_2())
