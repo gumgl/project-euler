@@ -16,7 +16,7 @@ def solve(input_data):
                 if i < width - 1:
                     beam_counts[i + 1] += prev_counts[i]
                 beam_counts[i] = 0
-    return (splits, sum(beam_counts))
+    return splits, sum(beam_counts)
 
 # working part 1 merged into part 2
 def part_1(input_lines):

@@ -26,4 +26,4 @@ def solve(input_grid):
 
         return count
     
-    return (part_1(), part_2())
+    return part_1(), part_2()

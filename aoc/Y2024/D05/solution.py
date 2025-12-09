@@ -17,4 +17,4 @@ def solve(input_data):
 
         return sum(sorted(update, key=cmp_to_key(compare))[len(update) // 2] for update in updates if is_misordered(update))
     
-    return (part_1(), part_2())
+    return part_1(), part_2()

@@ -2,7 +2,7 @@ import itertools
 
 def solve(input_data):
     red_tiles = [tuple(int(n) for n in line.split(',')) for line in input_data.splitlines()]
-    return (part_1(red_tiles), part_2(red_tiles))
+    return part_1(red_tiles), part_2(red_tiles)
 
 rectangle_area = lambda p1, p2: (abs(p2[0] - p1[0]) + 1) * (abs(p2[1] - p1[1]) + 1)
 

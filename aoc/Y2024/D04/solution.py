@@ -24,7 +24,7 @@ def solve(input_data):
                 + is_xmas(flipped_horizontally(transposed(grid)))
                 for x in range(len(input_lines[0])-2) for y in range(len(input_lines)-2))
     
-    return (part_1(), part_2())
+    return part_1(), part_2()
 
 def diagonals(grid):
     x_max = len(grid[0])
@@ -32,5 +32,4 @@ def diagonals(grid):
     return (
         [[grid[i][x+i] for i in range(x_max - x)] for x in range(x_max)] +
         [[grid[y+i][i] for i in range(y_max - y)] for y in range(1, y_max)]
-        
     )

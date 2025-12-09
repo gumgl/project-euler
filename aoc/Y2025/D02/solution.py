@@ -1,6 +1,6 @@
 def solve(input_data):
     ranges = [[int(i) for i in idrange.split('-')] for idrange in input_data.split(',')]
-    return (part_1(ranges), part_2(ranges))
+    return part_1(ranges), part_2(ranges)
 
 divisors = lambda n : {j for i in range(1, int(n**0.5) + 1) if n % i == 0 for j in (i, n//i)}
 

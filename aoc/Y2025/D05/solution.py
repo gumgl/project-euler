@@ -3,7 +3,7 @@ def solve(input_data):
     ranges = sorted([[int(n) for n in line.split('-')] for line in input_sections[0].splitlines()], key=lambda r: r[0])
     ids = [int(line) for line in input_sections[1].splitlines()]
 
-    return (part_1(ranges, ids), part_2(ranges))
+    return part_1(ranges, ids), part_2(ranges)
 
 def part_1(ranges, ids):
     return sum(any(r[0] <= id <= r[1] for r in ranges) for id in ids)

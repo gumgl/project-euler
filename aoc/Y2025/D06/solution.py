@@ -25,4 +25,4 @@ def solve(input_data):
                     real_initials[operator_char])
                     for operation_i, operator_i in enumerate(operation_is)))
     
-    return (part_1(), part_2())
+    return part_1(), part_2()

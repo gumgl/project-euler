@@ -1,6 +1,6 @@
 def solve(input_data):
     input_lines = input_data.splitlines()
-    return (part_1(input_lines), part_2(input_lines))
+    return part_1(input_lines), part_2(input_lines)
 
 def largest_subnumber(n: str, length: int):
     """

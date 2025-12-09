@@ -21,5 +21,5 @@ def solve(input_data):
             if 0 <= (antinode := add(mul(add(loc2, mul(loc1, -1)), d), loc2))[0] < len(input_lines[0]) and 0 <= antinode[1] < len(input_lines)
             })
 
-    return(count_antinodes(1),
-           count_antinodes(max(len(input_lines), len(input_lines[0]))))
+    return (count_antinodes(1),
+            count_antinodes(max(len(input_lines), len(input_lines[0]))))

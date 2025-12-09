@@ -1,6 +1,6 @@
 def solve(input_data):
     moves = [int(line[1:]) * (-1 if line[0] == 'L' else 1) for line in input_data.splitlines()]
-    return (part_1(moves), part_2(moves))
+    return part_1(moves), part_2(moves)
 
 def part_1(moves):
     #return sum([50] + moves) % 100

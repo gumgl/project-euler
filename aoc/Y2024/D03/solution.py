@@ -19,4 +19,4 @@ def part_2(instructions):
 
 def solve(input_data):
     instructions = re.findall(r'(mul|do|don\'t)\((?:(\d+),(\d+))?\)', input_data)
-    return (part_1(instructions), part_2(instructions))
+    return part_1(instructions), part_2(instructions)
