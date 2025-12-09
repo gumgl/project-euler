@@ -1,0 +1,91 @@
+cabal-version: 3.0
+name: puzzles
+version: 0.1.0.0
+
+common shared
+  default-language: Haskell2010
+  build-depends:
+    base,
+    split,
+    containers,
+    arithmoi,
+    digits,
+    vector,
+    text,
+    mtl,
+    transformers,
+    parsec,
+    directory,
+    filepath,
+    time,
+    regex-tdfa
+  ghc-options: -Wall -Wno-type-defaults -Wno-missing-signatures
+
+library common
+  import: shared
+  hs-source-dirs: common
+  exposed-modules:
+    Common
+
+executable euler
+  import: shared
+  main-is: euler/Runner.hs
+  hs-source-dirs: .
+  build-depends: common
+  other-modules:
+    Euler.P12.Solution
+    Euler.P14.Solution
+    Euler.P19.Solution
+    Euler.P20.Solution
+    Euler.P23.Solution
+    Euler.P27.Solution
+    Euler.P29.Solution
+    Euler.P30.Solution
+    Euler.P31.Solution
+    Euler.P32.Solution
+    Euler.P33.Solution
+    Euler.P34.Solution
+    Euler.P35.Solution
+    Euler.P36.Solution
+    Euler.P37.Solution
+    Euler.P38.Solution
+    Euler.P39.Solution
+    Euler.P40.Solution
+    Euler.P43.Solution
+    Euler.P44.Solution
+    Euler.P47.Solution
+    Euler.P49.Solution
+    Euler.P53.Solution
+    Euler.P57.Solution
+    Euler.P59.Solution
+    Euler.P60.Solution
+    Euler.P61.Solution
+    Euler.P63.Solution
+    Euler.P69.Attempts
+    Euler.P70.Solution
+    Euler.P71.Solution
+    Euler.P72.Solution
+    Euler.P73.Solution
+    Euler.P74.Solution
+    Euler.P76.Solution
+    Euler.P77.Solution
+    Euler.P85.Solution
+    Euler.P91.Solution
+    Euler.P92.Solution
+    Euler.P93.Solution
+    Euler.P98.Solution
+    Euler.P100.Solution
+    Euler.P104.Solution
+    Euler.P333.Solution
+    Euler.P504.Solution
+    Euler.P719.Solution
+
+executable aoc
+  import: shared
+  main-is: aoc/Runner.hs
+  hs-source-dirs: .
+  build-depends: common
+  other-modules:
+    Aoc.Y2023.D06.Solution
+    Aoc.Y2024.D01.Solution
+    Aoc.Y2024.D02.Solution

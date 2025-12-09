@@ -1,0 +1,2 @@
+Unfortunately, https://en.wikipedia.org/wiki/Pell%27s_equation#Example lead me to https://oeis.org/A033316
+Definitely not how it was intended to be solved but I think Wikipedia and OEIS are fair resources.
