@@ -1,6 +1,7 @@
-input_line = open('09_input.txt', 'r').read().strip()
+def solve(input_data):
+    return (part_1(input_data.strip()), part_2(input_data.strip()))
 
-def part_1():
+def part_1(input_line):
     file_sizes = [int(input_line[n]) for n in range(0, len(input_line), 2)]
     space_sizes = [int(input_line[n]) for n in range(1, len(input_line), 2)]
 
@@ -29,7 +30,7 @@ def part_1():
     
     return checksum
 
-def part_2():
+def part_2(input_line):
     files = [[id, int(input_line[pos])] for id, pos in enumerate(range(0, len(input_line), 2))]
     spaces = [[int(input_line[n]), []] for n in range(1, len(input_line), 2)]
 
@@ -53,6 +54,3 @@ def part_2():
                 position += moved_file_size
             position += spaces[i][0] # jump over empty space
     return checksum
-
-print(part_1())
-print(part_2())
