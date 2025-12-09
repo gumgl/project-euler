@@ -26,6 +26,7 @@ function Invoke-Script {
         if ($Example) { $cmdArgs += "-e" }
         
         $time = Measure-Command {
+            $env:PYTHONPATH = Join-Path $Root "common"
             & python $cmdArgs | Out-Host
         }
         
