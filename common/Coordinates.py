@@ -74,7 +74,7 @@ class Point:
     def __setitem__(self, key, value):
         return setattr(self, key, value)
 
-class Rectangle:
+class RectangularCuboid:
     def __init__(self, start, end = None):
         """For integer (lattice) representation, end represents the boundary and is not included in the rectangle.
         e.g. a cube of x-length 2 has (start, end) = (1,3)"""
@@ -83,29 +83,48 @@ class Rectangle:
             self.lower = Point()
             self.upper = start
         else:
-            self.lower = Point(min(start.x, end.x), min(start.y, end.y))
-            self.upper = Point(max(start.x, end.x), max(start.y, end.y))
+            self.lower = Point(min(start.x, end.x), min(start.y, end.y), min(start.z, end.z))
+            self.upper = Point(max(start.x, end.x), max(start.y, end.y), max(start.z, end.z))
 
-    def __contains__(self, point):
-        return point is not None and (self.lower.x <= point.x < self.upper.x
-                                and self.lower.y <= point.y < self.upper.y)
+    def __contains__(self, point, dimensions):
+        return point is not None and \
+                (dimensions < 1 or self.lower.x <= point.x < self.upper.x) and \
+                (dimensions < 2 or self.lower.y <= point.y < self.upper.y) and \
+                (dimensions < 3 or self.lower.z <= point.z < self.upper.z)
 
-    def area(self):
-        """Returns x * y, 0 if any dimension length <= 0"""
-        return max(0, self.upper.x - self.lower.x) * max(0, self.upper.y - self.lower.y)
+    def area(self, padding = Point(0,0)):
+        """Returns x * y, 0 if any dimension length <= 0
+        
+        :param padding: Optional padding in each dimension, on direction only (e.g. padding.x=1 adds 1 to the X dimension length)
+        """
+        return (max(0, self.upper.x - self.lower.x) + padding.x) * (max(0, self.upper.y - self.lower.y) + padding.y)
     
-    def overlap(self, other):
-        return Rectangle(Point(max(self.lower.x, other.lower.x), max(self.lower.y, other.lower.y)),
+    def volume(self):
+        """Returns x * y * z, 0 if any dimension length <= 0"""
+        return max(0, self.upper.x - self.lower.x) * max(0, self.upper.y - self.lower.y) * max(0, self.upper.z - self.lower.z)
+    
+    def overlap_2d(self, other):
+        return RectangularCuboid(Point(max(self.lower.x, other.lower.x), max(self.lower.y, other.lower.y)),
                     Point(min(self.upper.x, other.upper.x), min(self.upper.y, other.upper.y)))
     
     def lattice_points(self):
         return (Point(x, y) for x in range(self.lower.x, self.upper.x) for y in range(self.lower.y, self.upper.y))
     
-    def intersects(self, other, allowable_overlap):
-        return not (self.upper.x + allowable_overlap < other.lower.x
-                 or other.upper.x + allowable_overlap < self.lower.x
-                 or self.upper.y + allowable_overlap < other.lower.y
-                 or other.upper.y + allowable_overlap < self.lower.y)
+    def intersects(self, other, dimensions, allowable_overlap = 0):
+        return not ((self.upper.x < other.lower.x + allowable_overlap
+                 or other.upper.x < self.lower.x  + allowable_overlap) and dimensions >= 1
+                 or (self.upper.y < other.lower.y + allowable_overlap
+                 or other.upper.y < self.lower.y  + allowable_overlap) and dimensions >= 2
+                 or (self.upper.z < other.lower.z + allowable_overlap
+                 or other.upper.z < self.lower.z  + allowable_overlap) and dimensions >= 3)
+    
+    def intersects2(self, other, allowable_overlap):
+        return not (self.upper.x <= other.lower.x
+                 or other.upper.x <= self.lower.x
+                 or self.upper.y <= other.lower.y
+                 or other.upper.y <= self.lower.y)
+
+Rectangle = RectangularCuboid # Alias for 2D usage
 
 class Polygon2D:
     def __init__(self, points):
