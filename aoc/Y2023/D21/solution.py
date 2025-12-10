@@ -8,7 +8,7 @@ def solve(input_data):
     input_start = next(Point(x, y) for y, line in enumerate(input_grid) for x, c in enumerate(line) if c == 'S')
     input_grid[input_start.y][input_start.x] = '.' # to enable infinite grids
 
-    return (part_1(input_grid, input_start), part_2(input_grid, input_start))
+    return part_1(input_grid, input_start), part_2(input_grid, input_start)
 
 def count_garden_plots(grid, starts, max_distance, infinite_grid = False, return_distance_map = False):
     """Returns the number of garden plots visited in the form (even_count, odd_count) or the distance map"""
