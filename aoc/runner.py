@@ -54,14 +54,44 @@ def run_solution(year, day, use_example):
 
 def main():
     parser = argparse.ArgumentParser(description="Run Advent of Code solutions.")
-    parser.add_argument("year", type=str, help="The year of the challenge (e.g., 2024)")
+    parser.add_argument("year_or_file", type=str, help="The year of the challenge (e.g., 2024) OR path to solution file")
     parser.add_argument("day", type=str, nargs="?", help="The day of the challenge (e.g., 10). If omitted, runs all days.")
     parser.add_argument("-e", "--example", action="store_true", help="Use the example input file")
     
     args = parser.parse_args()
     
+    # Check if first argument is a file path
+    arg_path = Path(args.year_or_file)
+    if args.year_or_file.endswith(".py") and arg_path.exists():
+        # Try to extract year and day from path
+        # Expected structure: .../Y<year>/D<day>/solution.py
+        
+        parts = arg_path.parts
+        year = None
+        day = None
+        
+        for part in parts:
+            if part.startswith("Y") and part[1:].isdigit() and len(part) == 5:
+                year = part[1:]
+            elif part.startswith("D") and part[1:].isdigit() and len(part) == 3:
+                day = part[1:]
+        
+        if year and day:
+            print(f"Detected Year: {year}, Day: {day} from path")
+            success, error = run_solution(year, day, args.example)
+            if not success:
+                print(f"Error: {error}")
+                sys.exit(1)
+            return
+        else:
+             print(f"Could not extract Year and Day from path: {args.year_or_file}")
+             sys.exit(1)
+
+    # If not a file, treat as year
+    year = args.year_or_file
+    
     if args.day:
-        success, error = run_solution(args.year, args.day, args.example)
+        success, error = run_solution(year, args.day, args.example)
         if not success:
             print(f"Error: {error}")
             sys.exit(1)
@@ -72,16 +102,20 @@ def main():
             day_str = str(d)
             day_padded = day_str.zfill(2)
             base_dir = Path(__file__).parent
-            script_path = base_dir / f"Y{args.year}" / f"D{day_padded}.py"
+            
+            # Check for Dxx/solution.py
+            year_dir = base_dir / f"Y{year}"
+            day_dir = year_dir / f"D{day_padded}"
+            script_path = day_dir / "solution.py"
             
             if script_path.exists():
                 found_any = True
-                success, error = run_solution(args.year, day_str, args.example)
+                success, error = run_solution(year, day_str, args.example)
                 if not success:
                     print(f"Error running day {day_str}: {error}")
         
         if not found_any:
-            print(f"No solutions found for year {args.year}")
+            print(f"No solutions found for year {year}")
 
 if __name__ == "__main__":
     main()

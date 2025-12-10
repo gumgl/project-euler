@@ -5,12 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: Current File",
+            "name": "Python AOC Debugger",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "aoc/runner.py",
+            "args": ["${file}"],
             "console": "integratedTerminal",
-            "cwd": "${fileDirname}"
+            "cwd": "${workspaceRoot}",
+            "env": {"PYTHONPATH": "${workspaceRoot}/common"}
         }
     ]
 }
