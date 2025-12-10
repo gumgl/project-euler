@@ -1,18 +1,22 @@
-input_sections = [section.splitlines() for section in open('05_input.txt', 'r').read().split('\n\n')]
 
-input_seeds = [int(seed) for seed in input_sections[0][0].split(':')[1].split()]
+def solve(input_data):
+    input_sections = [section.splitlines() for section in input_data.split('\n\n')]
 
-maps = {(names := lines[0].split()[0].split('-'))[0] : 
-         (names[2], sorted([[int(n) for n in line.split()] for line in lines[1:]], key=lambda line: line[1]))
-         for lines in input_sections[1:]}
+    input_seeds = [int(seed) for seed in input_sections[0][0].split(':')[1].split()]
 
-def map_seed(info_type, n):
+    maps = {(names := lines[0].split()[0].split('-'))[0] : 
+            (names[2], sorted([[int(n) for n in line.split()] for line in lines[1:]], key=lambda line: line[1]))
+            for lines in input_sections[1:]}
+    
+    return part_1(maps, input_seeds), part_2(maps, input_seeds)
+
+def map_seed(maps, info_type, n):
     return next((n - source + destination
             for destination, source, length in maps[info_type][1]
             if n in range(source, source + length)),
             n)
 
-def map_seed_range(info_type, seed_start, seed_length):
+def map_seed_range(maps, info_type, seed_start, seed_length):
     seed_ranges = []
     n = seed_start
     rules = iter(maps[info_type][1])
@@ -35,16 +39,16 @@ def map_seed_range(info_type, seed_start, seed_length):
             # If we are after current rule, do nothing until we find a rule in front of us
     return seed_ranges
 
-def part_1():
+def part_1(maps, input_seeds):
     info_type = 'seed'
     seeds = input_seeds
     while info_type != 'location':
-        seeds = [map_seed(info_type, seed) for seed in seeds]
+        seeds = [map_seed(maps, info_type, seed) for seed in seeds]
         info_type = maps[info_type][0]
 
     return min(seeds)
 
-def part_2():
+def part_2(maps, input_seeds):
     """Since there are almost 2B seeds, mapping them individually is too slow.
     Instead, we map seed ranges against all the rules of each map, partitioning the number of
     seed ranges by a small factor each time (proportional to the probability of partial overlap).
@@ -52,10 +56,7 @@ def part_2():
     seed_ranges = [(input_seeds[i*2], input_seeds[i*2+1]) for i in range(len(input_seeds)//2)]
     info_type = 'seed'
     while info_type != 'location':
-        seed_ranges = sum((map_seed_range(info_type, *seed_range) for seed_range in seed_ranges), [])
+        seed_ranges = sum((map_seed_range(maps, info_type, *seed_range) for seed_range in seed_ranges), [])
         info_type = maps[info_type][0]
         # print(len(seed_ranges)) # barely reaches above 100
     return min(seed_range[0] for seed_range in seed_ranges)
-
-print(part_1())
-print(part_2())

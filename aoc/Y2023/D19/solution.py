@@ -1,9 +1,12 @@
 from math import prod
 
-input_sections = [section.splitlines() for section in open('19_input.txt', 'r').read().split('\n\n')]
+def solve(input_data):
+    input_sections = [section.splitlines() for section in input_data.split('\n\n')]
 
-input_workflows = {name: rules.split(',') for name, rules in map(lambda line: line[:-1].split('{'), input_sections[0])}
-input_parts = [{rating[0]: int(rating[2:]) for rating in ratings[1:-1].split(',')} for ratings in input_sections[1]]
+    input_workflows = {name: rules.split(',') for name, rules in map(lambda line: line[:-1].split('{'), input_sections[0])}
+    input_parts = [{rating[0]: int(rating[2:]) for rating in ratings[1:-1].split(',')} for ratings in input_sections[1]]
+
+    return (part_1(input_parts, input_workflows), part_2(input_workflows))
 
 def evaluate_part(part, workflow_set):
     workflow = 'in'
@@ -19,7 +22,7 @@ def evaluate_part(part, workflow_set):
                 workflow = outcome
                 break
 
-def part_1():
+def part_1(input_parts, input_workflows):
     return sum(sum(part.values()) for part in input_parts if evaluate_part(part, input_workflows))
 
 def compute_ranges(workflow_set):
@@ -39,8 +42,8 @@ def compute_ranges(workflow_set):
                     to_visit.append((outcome, conditions + [(condition[0], condition[1], int(condition[2:]))]))
                     # Store opposite of condition for the rest of the rules
                     conditions.append((condition[0],
-                                       '<' if condition[1] == '>' else '>',
-                                       int(condition[2:]) + (1 if condition[1] == '>' else -1)))
+                                    '<' if condition[1] == '>' else '>',
+                                    int(condition[2:]) + (1 if condition[1] == '>' else -1)))
                 else: # default option, just go to that workflow
                     to_visit.append((rule, conditions))
     
@@ -49,8 +52,5 @@ def compute_ranges(workflow_set):
                 for rating in 'xmas'}
             for condition in accept_paths]
 
-def part_2():
+def part_2(input_workflows):
     return sum(prod(maximum - minimum + 1 for minimum, maximum in ranges.values()) for ranges in compute_ranges(input_workflows))
-
-print(part_1())
-print(part_2())

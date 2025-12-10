@@ -74,11 +74,16 @@ class Point:
         return setattr(self, key, value)
 
 class Rectangle:
-    def __init__(self, start, end):
+    def __init__(self, start, end = None):
         """For integer (lattice) representation, end represents the boundary and is not included in the rectangle.
         e.g. a cube of x-length 2 has (start, end) = (1,3)"""
-        self.lower = Point(min(start.x, end.x), min(start.y, end.y))
-        self.upper = Point(max(start.x, end.x), max(start.y, end.y))
+        
+        if end is None:
+            self.lower = Point()
+            self.upper = start
+        else:
+            self.lower = Point(min(start.x, end.x), min(start.y, end.y))
+            self.upper = Point(max(start.x, end.x), max(start.y, end.y))
 
     def __contains__(self, point):
         return point is not None and (self.lower.x <= point.x < self.upper.x

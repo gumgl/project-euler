@@ -1,10 +1,13 @@
-from adventofcode2023.coordinates import Point, Rectangle
-from adventofcode2023.helpers import pairs
+from Coordinates import Point, Rectangle
+from Helpers import pairs
 import copy
 import z3
 
-input_lines = open('24_input.txt', 'r').read().splitlines()
-projectiles = [(Point(*eval((s := line.split(' @ '))[0])), Point(*eval(s[1]))) for line in input_lines]
+def solve(input_data):
+    input_lines = input_data.splitlines()
+    projectiles = [(Point(*eval((s := line.split(' @ '))[0])), Point(*eval(s[1]))) for line in input_lines]
+
+    return part_1(projectiles), part_2(projectiles)
 
 def reduce_box(proj1, proj2, start_box):
     # Adjust target boundary based on lines' directions and starting points
@@ -47,7 +50,7 @@ def xy_intersection(proj1, proj2):
         # t2 = (x - s2.x) / d2.x
         return Point(x, y1)
 
-def part_1():
+def part_1(projectiles):
     search_box = Rectangle(Point(1, 1) * 200000000000000, Point(1, 1) * (400000000000000 + 1)) # inclusive upper bound
 
     return sum(
@@ -56,7 +59,7 @@ def part_1():
         and p in b
         for p1, p2 in pairs(projectiles))
 
-def part_2():
+def part_2(projectiles):
     T = [z3.Int(f't{i}') for i in range(3)] # one `t` for each of the first 3 projectiles
     (S, D) = ({dim: z3.Int(f'{v}{dim}') for dim in 'xyz'} for v in 'sd') # 3 dimensions of s and d of target
     
@@ -67,6 +70,3 @@ def part_2():
     s.check()
 
     return s.model().eval(sum(S.values()))
-
-print(part_1())
-print(part_2())

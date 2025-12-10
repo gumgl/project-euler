@@ -2,12 +2,27 @@ import re
 from collections import deque
 from math import prod, lcm
 
-input_lines = open('20_input.txt', 'r').read().splitlines()
-input_modules = {match.group(2): (match.group(1), match.group(3).split(', '))
-                 for match in map(re.compile('([%&])?([a-z]+) -> ((?:[a-z]+, )*(?:[a-z]+))').fullmatch, input_lines) if match}  
-module_io = {module_id: input_modules[module_id] +
-                ([source_id for source_id, source_module in input_modules.items() if module_id in source_module[1]],)
-                for module_id in input_modules}
+def solve(input_data):
+    input_lines = input_data.splitlines()
+    input_modules = {match.group(2): (match.group(1), match.group(3).split(', '))
+                    for match in map(re.compile('([%&])?([a-z]+) -> ((?:[a-z]+, )*(?:[a-z]+))').fullmatch, input_lines) if match}  
+    module_io = {module_id: input_modules[module_id] +
+                    ([source_id for source_id, source_module in input_modules.items() if module_id in source_module[1]],)
+                    for module_id in input_modules}
+    
+    return part_1(module_io), part_2(module_io)
+
+def part_1(module_io):    
+    return prod(simulate(module_io, target_button_presses=1000).values())
+
+def part_2(module_io):
+    # Assumption: one conjunction module leads to rx, and all modules leading to it will send a 
+    # high pulse cyclically. Therefore we register the number of presses for each and compute the LCM.
+
+    last_before_rx = next(i for i, m in module_io.items() if 'rx' in m[1])
+    hopefully_cyclic = module_io[last_before_rx][2]
+
+    return lcm(*simulate(module_io, targets=hopefully_cyclic))
 
 def simulate(modules, target_button_presses = 0, targets = None, print_sequence = False):
     module_data = {}
@@ -51,19 +66,7 @@ def simulate(modules, target_button_presses = 0, targets = None, print_sequence 
                     pulses.extend((next_pulse_type, destination_id, module_id) for destination_id in destinations)
     return pulse_counts
 
-def part_1():    
-    return prod(simulate(module_io, target_button_presses=1000).values())
-
-def part_2():
-    # Assumption: one conjunction module leads to rx, and all modules leading to it will send a 
-    # high pulse cyclically. Therefore we register the number of presses for each and compute the LCM.
-
-    last_before_rx = next(i for i, m in module_io.items() if 'rx' in m[1])
-    hopefully_cyclic = module_io[last_before_rx][2]
-
-    return lcm(*simulate(module_io, targets=hopefully_cyclic))
-
-def print_graph():
+def print_graph(input_modules):
     """GraphViz markup for use on https://edotor.net/"""
     print('digraph {')
     for module_id, module in input_modules.items():
@@ -76,6 +79,3 @@ def print_graph():
             case None:
                 print(module_id, '[shape=star, color=yellow];')
     print('}')
-
-print(part_1())
-print(part_2())
