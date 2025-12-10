@@ -37,3 +37,5 @@ TODO: add runners
 ### In Python:
 
 1. Simply create your file as `/aoc/Y{year}/D{day}/solution.py` or `/euler/P{n}/Solution.py`
+1. Implement `solve(input_data: String) -> Tuple[Any, Any]`. Note: it is important to return a 2-tuple.
+1. For any new package, add to [`/python_requirements.txt`](/python_requirements.txt) and it will be automatically installed on the first [`run.ps1`](/run.ps1)

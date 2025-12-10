@@ -20,6 +20,10 @@ function Invoke-Script {
     
     # Check Python
     if (Test-Path (Join-Path $Dir "solution.py")) {
+        # Ensure z3-solver is installed
+        Write-Host "Checking python requirements..." -ForegroundColor DarkGray
+        & py -m pip install -r (Join-Path $Root "python_requirements.txt") --quiet | Out-Host
+        
         Write-Host "--- Day $D ($Y) [Python] ---" -ForegroundColor Green
         # Let run.py handle the output, we just measure time
         $cmdArgs = @("aoc\runner.py", $Y, $D)
