@@ -5,11 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python AOC Debugger",
+            "name": "Python AOC Debugger: Input",
             "type": "debugpy",
             "request": "launch",
             "program": "aoc/runner.py",
             "args": ["${file}"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceRoot}",
+            "env": {"PYTHONPATH": "${workspaceRoot}/common"}
+        },        
+        {
+            "name": "Python AOC Debugger: Example",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "aoc/runner.py",
+            "args": ["${file}", "--example"],
             "console": "integratedTerminal",
             "cwd": "${workspaceRoot}",
             "env": {"PYTHONPATH": "${workspaceRoot}/common"}
