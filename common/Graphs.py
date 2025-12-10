@@ -89,10 +89,10 @@ class ALGraph:
         return None
 
     def get_random_node(self):
-        return random.choice(self.node_ids())
+        return random.choice(list(self.node_ids()))
 
     def get_random_edge(self):
-        return random.choice(self.all_edges())
+        return random.choice(list(self.all_edges()))
 
     def get_random_edge_proportionally(self):
         """Get a random edge proportionally to the weights"""

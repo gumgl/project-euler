@@ -53,19 +53,20 @@ class Point:
         """Swap x and y values"""
         return Point(self.y, self.x, self.z)
     
-    def manhattan_distance(self, other):
+    def manhattan_distance(self, other: Point):
         return (other - self).manhattan_length()
     
     def manhattan_length(self):
         return abs(self.x) + abs(self.y) + abs(self.z)
     
-    def euclidean_distance(self, other):
+    def euclidean_distance(self, other: Point, fast_comparative = False):
         """Straight line distance between two points"""
-        return (other - self).euclidean_length()
+        return (other - self).euclidean_length(skip_sqrt=fast_comparative)
 
-    def euclidean_length(self):
+    def euclidean_length(self, skip_sqrt = False):
         """Straight line distance to origin"""
-        return sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
+        length = self.x ** 2 + self.y ** 2 + self.z ** 2
+        return length if skip_sqrt else sqrt(length)
     
     def __getitem__(self, key):
         return getattr(self, key)
@@ -99,6 +100,12 @@ class Rectangle:
     
     def lattice_points(self):
         return (Point(x, y) for x in range(self.lower.x, self.upper.x) for y in range(self.lower.y, self.upper.y))
+    
+    def intersects(self, other, allowable_overlap):
+        return not (self.upper.x + allowable_overlap < other.lower.x
+                 or other.upper.x + allowable_overlap < self.lower.x
+                 or self.upper.y + allowable_overlap < other.lower.y
+                 or other.upper.y + allowable_overlap < self.lower.y)
 
 class Polygon2D:
     def __init__(self, points):

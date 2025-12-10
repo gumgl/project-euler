@@ -1,5 +1,5 @@
 def solve(input_data):
-    return (part_1(input_data.strip()), part_2(input_data.strip()))
+    return part_1(input_data.strip()), part_2(input_data.strip())
 
 def part_1(input_line):
     file_sizes = [int(input_line[n]) for n in range(0, len(input_line), 2)]

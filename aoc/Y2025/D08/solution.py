@@ -1,21 +1,20 @@
 import itertools
 import math
 
-def solve(input_data):
-    boxes = [tuple(map(int, line.split(','))) for line in input_data.splitlines()]
+from Coordinates import Point
 
-    def distance(b1, b2):
-        return sum((c1 - c2) ** 2 for c1, c2 in zip(b1, b2))
+def solve(input_data):
+    boxes = [Point.from_tuple(int(n) for n in line.split(',')) for line in input_data.splitlines()]
 
     circuits = []
-    box_to_circuit: dict[tuple[int, ...], set[tuple[int, ...]]] = {}
-    parts_completed = [False] * 2
+    box_to_circuit: dict[Point, set[Point]] = {}
 
-    sorted_pairs = sorted(itertools.combinations(boxes, 2), key=lambda p: distance(p[0], p[1]))
+    sorted_pairs = sorted(itertools.combinations(boxes, 2), key=lambda p: p[0].euclidean_distance(p[1], fast_comparative=True))
     answers = {}
 
     for i, (box1, box2) in enumerate(sorted_pairs):
-        if answers.get(0) is None and i >= 1000:
+        if answers.get(0) is None and i >= (1000 if len(boxes) > 20 else 10):
+            # Weird case where one variable is different between real and example input yet not in the input files
             answers[0] = math.prod(sorted((len(c) for c in circuits), reverse=True)[:3])
 
         c1, c2 = box_to_circuit.get(box1), box_to_circuit.get(box2)
@@ -39,7 +38,7 @@ def solve(input_data):
             box_to_circuit[box2] = new_c
 
         if answers.get(1) is None and len(box_to_circuit) == len(boxes):
-            answers[1] = box1[0] * box2[0]
+            answers[1] = box1.x * box2.x
 
         if answers.get(0) and answers.get(1):
             break
