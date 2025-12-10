@@ -9,6 +9,10 @@ class Point:
     @staticmethod
     def from_tuple(t):
         return Point(*t)
+    
+    @staticmethod
+    def unit(dimensions):
+        return Point.from_tuple((1,) * dimensions)
 
     def __add__(self, other):
         return Point(self.x + other.x, self.y + other.y, self.z + other.z)
@@ -91,6 +95,16 @@ class RectangularCuboid:
                 (dimensions < 1 or self.lower.x <= point.x < self.upper.x) and \
                 (dimensions < 2 or self.lower.y <= point.y < self.upper.y) and \
                 (dimensions < 3 or self.lower.z <= point.z < self.upper.z)
+    
+    def __str__(self):
+        return f"{self.lower}~{self.upper}"
+    
+    def __add__(self, delta: Point):
+        return RectangularCuboid(self.lower + delta, self.upper + delta)
+    
+    def translate(self, delta: Point):
+        self.lower += delta
+        self.upper += delta
 
     def area(self, padding = Point(0,0)):
         """Returns x * y, 0 if any dimension length <= 0
@@ -107,8 +121,9 @@ class RectangularCuboid:
         return RectangularCuboid(Point(max(self.lower.x, other.lower.x), max(self.lower.y, other.lower.y)),
                     Point(min(self.upper.x, other.upper.x), min(self.upper.y, other.upper.y)))
     
-    def lattice_points(self):
-        return (Point(x, y) for x in range(self.lower.x, self.upper.x) for y in range(self.lower.y, self.upper.y))
+    def lattice_points_2d(self, padding_lower = Point(0,0), padding_upper = Point(0,0)):
+        return (Point(x, y) for x in range(self.lower.x - padding_lower.x, self.upper.x + padding_upper.x)
+                            for y in range(self.lower.y - padding_lower.y, self.upper.y + padding_upper.y))
     
     def intersects(self, other, dimensions, allowable_overlap = 0):
         return not ((self.upper.x < other.lower.x + allowable_overlap

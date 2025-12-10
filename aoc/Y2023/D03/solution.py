@@ -12,14 +12,14 @@ def solve(input_data):
             part_2(input_grid, potential_parts))
     
 def part_1(grid, potential_parts):
-    grid_boundary = Rectangle(Point(0, 0), Point(len(grid[0]) - 1, len(grid) - 1))
+    grid_boundary = Rectangle(Point(len(grid[0]) - 1, len(grid) - 1))
     def is_symbol(c):
         return c not in '.0123456789'
     
     def is_real_part(part):
         (_, row, start, end) = part
         return any(is_symbol(grid[p.y][p.x])
-            for p in grid_boundary.overlap_2d(Rectangle(Point(start - 1, row - 1), Point(end + 1, row + 2))).lattice_points())
+            for p in grid_boundary.overlap_2d(Rectangle(Point(start - 1, row - 1), Point(end + 1, row + 2))).lattice_points_2d())
 
     return sum(part[0] for part in potential_parts if is_real_part(part))
 
