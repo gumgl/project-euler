@@ -1,5 +1,5 @@
 import copy
-from itertools import groupby
+import itertools
 from typing import Any, Callable, Iterable, TypeVar
 
 def indices_2d[T](haystack: Iterable[Iterable[T]], value_or_predicate: T | Callable[[T], bool], nested_index_first = False):
@@ -44,7 +44,7 @@ def pairs(elems: Iterable):
     return ((e1, e2) for i, e1 in enumerate(elems) for e2 in elems[i + 1:])
 
 def consecutive_pairs(elems: Iterable, loop_around = False):
-    """Return size 2 pairs from a list e.g. [1,3,5, 7] => [(1,3),(3,5),(5,7)]
+    """Return size 2 pairs from a list e.g. [1,3,5,7] => [(1,3),(3,5),(5,7)]
 
     Equivalent to `zip(elems, elems[1:])` or `itertools.pairwise(elems)`
 
@@ -56,6 +56,13 @@ def consecutive_pairs(elems: Iterable, loop_around = False):
     """
     elems = list(elems)
     return list(zip(elems, elems[1:])) + ([(elems[-1], elems[0])] if loop_around else [])
+
+def all_combinations(iter: Iterable[Any]):
+    """Generate all combinations of all sizes from an iterable's elements.
+    
+    Note: the iterable will be consumed."""
+    l = list(iter)
+    return itertools.chain.from_iterable(itertools.combinations(l, i + 1) for i in range(len(l)))
 
 
 def count_if[T](haystack: Iterable[T], value_or_predicate: T | Callable[[T], bool]) -> int:
@@ -97,7 +104,7 @@ def int_sieve_2d(size = None, include_negatives = False, origin = (0, 0)):
 
 # From https://stackoverflow.com/a/3844832/
 def efficient_all_equal(iterable):
-    g = groupby(iterable)
+    g = itertools.groupby(iterable)
     return next(g, True) and not next(g, False)
 
 def width(grid):
