@@ -1,4 +1,5 @@
 from math import sqrt
+from enum import Enum
 
 class Point:
     def __init__(self, x = 0, y = 0, z = 0):
@@ -78,11 +79,16 @@ class Point:
     def __setitem__(self, key, value):
         return setattr(self, key, value)
 
+class Direction2D(Enum):
+    UP = Point(0, -1)
+    RIGHT = Point(1, 0)
+    DOWN = Point(0, 1)
+    LEFT = Point(-1, 0)
+
 class RectangularCuboid:
     def __init__(self, start, end = None):
         """For integer (lattice) representation, end represents the boundary and is not included in the rectangle.
         e.g. a cube of x-length 2 has (start, end) = (1,3)"""
-        
         if end is None:
             self.lower = Point()
             self.upper = start
@@ -90,11 +96,11 @@ class RectangularCuboid:
             self.lower = Point(min(start.x, end.x), min(start.y, end.y), min(start.z, end.z))
             self.upper = Point(max(start.x, end.x), max(start.y, end.y), max(start.z, end.z))
 
-    def __contains__(self, point, dimensions):
+    def __contains__(self, point : Point):
         return point is not None and \
-                (dimensions < 1 or self.lower.x <= point.x < self.upper.x) and \
-                (dimensions < 2 or self.lower.y <= point.y < self.upper.y) and \
-                (dimensions < 3 or self.lower.z <= point.z < self.upper.z)
+            self.lower.x <= point.x < self.upper.x and \
+            self.lower.y <= point.y < self.upper.y and \
+            self.lower.z <= point.z < self.upper.z
     
     def __str__(self):
         return f"{self.lower}~{self.upper}"
@@ -125,21 +131,19 @@ class RectangularCuboid:
         return (Point(x, y) for x in range(self.lower.x - padding_lower.x, self.upper.x + padding_upper.x)
                             for y in range(self.lower.y - padding_lower.y, self.upper.y + padding_upper.y))
     
-    def intersects(self, other, dimensions, allowable_overlap = 0):
+    def intersects(self, other: RectangularCuboid, dimensions: int, allowable_overlap = 0):
         return not ((self.upper.x < other.lower.x + allowable_overlap
                  or other.upper.x < self.lower.x  + allowable_overlap) and dimensions >= 1
                  or (self.upper.y < other.lower.y + allowable_overlap
                  or other.upper.y < self.lower.y  + allowable_overlap) and dimensions >= 2
                  or (self.upper.z < other.lower.z + allowable_overlap
                  or other.upper.z < self.lower.z  + allowable_overlap) and dimensions >= 3)
-    
-    def intersects2(self, other, allowable_overlap):
-        return not (self.upper.x <= other.lower.x
-                 or other.upper.x <= self.lower.x
-                 or self.upper.y <= other.lower.y
-                 or other.upper.y <= self.lower.y)
 
-Rectangle = RectangularCuboid # Alias for 2D usage
+class Rectangle(RectangularCuboid):
+    def __contains__(self, point : Point):
+        return point is not None and \
+            self.lower.x <= point.x < self.upper.x and \
+            self.lower.y <= point.y < self.upper.y
 
 class Polygon2D:
     def __init__(self, points):
