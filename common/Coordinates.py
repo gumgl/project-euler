@@ -58,6 +58,9 @@ class Point:
         """Swap x and y values"""
         return Point(self.y, self.x, self.z)
     
+    def abs(self):
+        return Point(abs(self.x), abs(self.y), abs(self.z))
+    
     def manhattan_distance(self, other: Point):
         return (other - self).manhattan_length()
     

@@ -64,6 +64,15 @@ def all_combinations(iter: Iterable[Any]):
     l = list(iter)
     return itertools.chain.from_iterable(itertools.combinations(l, i + 1) for i in range(len(l)))
 
+def pairwise_sum(*iterables: Iterable[int | bool]) -> Iterable[int]:
+    """Sum multiple iterables element-wise.
+
+    Stops at the shortest iterable's length.
+
+    ### Returns
+        iterator of summed elements
+    """
+    return (sum(values) for values in zip(*iterables))
 
 def count_if[T](haystack: Iterable[T], value_or_predicate: T | Callable[[T], bool]) -> int:
     """ Count the number of elements in iterator which match value or predicate"""
